@@ -1,29 +1,20 @@
 import streamlit as st
 
-clock_placeholder = st.empty()
-st.title("Local To-Do list:")
+about_page = st.Page(page="views/about_me.py",title="About Me",icon=":material/account_circle:",default=True,)
 
-if "task" not in st.session_state:
-    st.session_state.task = []
+project_1_page = st.Page(page="views/chat_bot.py",title="Chat Bot",icon=":material/smart_toy:",)
 
-new_task = st.text_input("Add To-Do:")
-if st.button("Add"):
-    if new_task.strip():
-        st.session_state.task.append(new_task.strip())
-        st.rerun()
-        
+project_2_page = st.Page(page="views/dashboard.py",title="Dashboard",icon=":material/bar_chart:",)
 
-st.subheader("List:")
-for i,task in enumerate(st.session_state.task):
-    col1,col2=st.columns([0.8,0.2])
-    col1.write(f"- {task}")
-    if col2.button("🗑️", key=f"del_{i}"):
-        del st.session_state.task[i]
-        st.rerun()
+project_3_page = st.Page(page="views/another_projects.py",title="Projects",icon=":material/view_apps:")
 
+pg = st.navigation({
+    "Info":[about_page],
+    "Projects":[project_1_page,project_2_page],
+    "Other":[project_3_page],
+})
 
-if st.button("Remove all tasks"):
-    st.session_state.task.clear()
-    st.rerun()
+st.logo("assets/logo.png")
+st.sidebar.text("Made by magla")
 
-
+pg.run()
